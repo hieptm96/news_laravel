@@ -8,6 +8,7 @@ use App\Http\Requests;
 
 use App\Category;
 use App\Post;
+use App\Comment;
 
 class HomeController extends Controller
 {
@@ -21,6 +22,10 @@ class HomeController extends Controller
 
     public function show($id){
     	$post = Post::findOrFail($id);
-    	return view('pages.show_post', compact('post'));
+        $comments = $post->comments()->get();
+        $a = '';
+        $b = show_comments_recursion($comments,0,$a);
+        echo $b;
+    	// return view('pages.show_post', compact('post'));
     }
 }

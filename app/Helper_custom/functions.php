@@ -47,7 +47,7 @@ function show_array($array){
     echo '</pre>';
 }
 
-function category_parent($data,$parent = 0,$str="--",$select = 0){
+function category_parent($data,$parent = 0,$str="--",$select = 0) {
     
     foreach($data as $item){
         $id = $item["id"];
@@ -63,4 +63,29 @@ function category_parent($data,$parent = 0,$str="--",$select = 0){
         }
         
     }
+}
+
+function show_comments_recursion($data, $parent = 0, $str = '') {
+    if ($parent == 0) {
+        $str += '<ul>';
+    } else {
+        $str += '<ul class="children">';
+    }
+    foreach ($data as $item) {
+        if ($item["parent_id"] == $parent) {
+            $str += '<li><div>';
+            $str += '<div class="comment-avatar"><img src="img/avatar.png" alt="MyPassion" /></div>';
+            $str += '<div class="commment-text-wrap">';
+            $str += '<div class="comment-data">';
+            $str += '<p><a href="#" class="url">MyPassion</a> <br /> <span>January 12, 2013 - <a href="#" class="comment-reply-link">reply</a></span></p>';
+            $str += '<div class="comment-text">' + $item["content"] + '</div>';
+            $str += '</div>';
+            $str += '</div>';
+            show_comments_recursion($data,$item["id"],$str);
+            $str += '</div></li>';
+        } else {
+            $str += "hiep";
+        }
+    }
+    return $str;
 }
